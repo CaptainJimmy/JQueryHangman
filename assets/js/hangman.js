@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 
 
-variables
+//variables
 var wins;
 var losses;
 var lettersGuessed=[];
@@ -31,9 +31,10 @@ function RandomWord() {
             type: "GET",
             url: requestStr
         }).done(function(result) {
-        	console.log(result);
+        	//console.log(result);
        pickedWord = result[0].word;
         console.log(pickedWord);
+        return pickedWord;
     })
  }
 
@@ -51,25 +52,25 @@ function newGame(){
 	//create the keyboard
 
 	//empty the div, add the first row
-	$('#keyboard-id').empty().html($('<div>').addClass("row1"));
+	$('#keyboard-id').html($('<div>').addClass("row1 text-center"));
 
 //create the first row
 	for (var i=0; i < keyboard.row1.length ; i++ ){
-		var newButton=$('<button>')
+		var newButton=$('<button>');
 		newButton.attr("class","btn btn-danger keyboardButton").text(keyboard.row1[i]).attr("data-value",keyboard.row1[i]);
 		$('#keyboard-id').append(newButton);
 	}
 	//create the second row
 	$('#keyboard-id').append($('<div>').addClass("row2"));
-	for (var i=0 < keyboard.row2.length;i++){
-		var newButton=$('<button>')
+	for (var i=0;i < keyboard.row2.length;i++){
+		var newButton=$('<button>');
 		newButton.attr("class","btn btn-warning keyboardButton").text(keyboard.row2[i]).attr("data-value",keyboard.row2[i]);
 		$('#keyboard-id').append(newButton);
 		}
 		//create the third row
 	$('#keyboard-id').append($('<div>').addClass("row3"));
-	for (var i=0 < keyboard.row3.length;i++){
-		var newButton=$('<button>')
+	for (var i=0; i < keyboard.row3.length;i++){
+		var newButton=$('<button>');
 		newButton.attr("class","btn btn-info keyboardButton").text(keyboard.row3[i]).attr("data-value",keyboard.row3[i]);
 		$('#keyboard-id').append(newButton);
 		}
@@ -84,7 +85,6 @@ function newGame(){
 	// placeholders.join(" ") to the DOM
 
 
-}
 
 //	// fun a for loop over our picked word array
 		// if valOfLetterPressed === pickedWordArray[i]
@@ -113,9 +113,11 @@ function newGame(){
 //})
 
 
-
- $('#new-game').on('click', function(event){
+ $(document).on('click',$('#new-game'), function(event){
+ 	event.preventDefault();
  	newGame();
+});
+
 });
 
 
@@ -144,4 +146,4 @@ function newGame(){
 
 
 //brackets for document ready, remove comment later
-});
+//});
