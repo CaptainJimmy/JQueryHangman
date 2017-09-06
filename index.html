@@ -3,10 +3,12 @@
 <html lang="en">
 <head>
 	<meta name="Trainviewport" content="width=device-width, initial-scale=1">
-	<title>Hangman in Jquery</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+	<title>Hangman in JQuery</title>
+<!-- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css">
 <!-- <link href="https://fonts.googleapis.com/css?family=Pacifico|VT323|Open+Sans+Condensed:300" rel="stylesheet"> -->
 <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<script src="https://use.fontawesome.com/cd53706be4.js"></script>
 <link rel="icon" href="assets/images/android.png">
 </head>
 <body>
@@ -21,42 +23,37 @@
 
 <!-- letters guessed box -->
 <div class="container">
-	<div class="jumbotron">
-		<h1> Hangman for those without necks </h1>
-		<p>Click the new game button to start</p>
+	<div class="jumbotron" id="jumbotron">
+		<h1 style="color: white"> Hangman for those without necks </h1>
+		<p style="color:white">Click the new game button to start</p>
 
 
 		<button id="new-game" class="btn btn-danger">New Game</button>
 	</div>
-<div class="well well-lg">
-	<div class="row">
-		<div class="col bg-primary">
-			
-			<div id="wins"></div>
-			<div id="losses"></div>
-			<div id="games-played"></div>
-			
-		</div>
-		<div class="col bg-secondary">
-		
-			<div id="picked-word-array"></div>
-				
-			<div id="guesses-made"></div>
-			<div id="guesses-left"></div>
-
-		</div>
-	</div>
-	<div class="row">
-		<div class="col bg-success">
-			<div class="keyboard" id="keyboard-id"></div>
-		</div>
-
-		</div>
-		</div>
-	</div>
-
+<div class="panel panel-info">
+	<div class="panel-heading tex"><h3>Guesses</h3></div>
+	<div class="panel-body">
+		<div id="picked-word-array"></div>
+		<div id="guesses-made"></div>
+		<div id="guesses-left"></div>
 	</div>
 </div>
+<div class="panel-success">
+	<div class="panel-heading"><h3>Keyboard:</h3></div>
+	<div class="panel-body">
+		<div class="keyboard" id="keyboard-id"></div>
+	</div>
+</div>
+<div class="panel panel-primary">
+	<div class="panel-heading"><h3>Scoreboard:</h3></div>
+	<div class="panel-body">
+		<div id="wins"></div>
+		<div id="losses"></div>
+		<div id="games-played"></div>
+	</div>
+</div>
+
+
 
 </div>
 
@@ -64,7 +61,6 @@
 <footer>
 </footer>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="assets/js/hangman.js"></script>
 </body>
 </html>

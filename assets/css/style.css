@@ -2,3 +2,12 @@
 	padding:15px;
 	margin:2px;
 }
+#jumbotron{
+	background-image: url('../images/hangman.jpg');
+	background-size: 75%;
+}
+.clue-buttons{
+	padding:20px;
+	margin: 5px;
+	font-size: 2em;
+}
