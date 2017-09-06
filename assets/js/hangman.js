@@ -50,6 +50,34 @@ function newGame(){
 
 	//create the keyboard
 
+	//empty the div, add the first row
+	$('#keyboard-id').empty().html($('<div>').addClass("row1"));
+
+//create the first row
+	for (var i=0; i < keyboard.row1.length ; i++ ){
+		var newButton=$('<button>')
+		newButton.attr("class","btn btn-danger keyboardButton").text(keyboard.row1[i]).attr("data-value",keyboard.row1[i]);
+		$('#keyboard-id').append(newButton);
+	}
+	//create the second row
+	$('#keyboard-id').append($('<div>').addClass("row2"));
+	for (var i=0 < keyboard.row2.length;i++){
+		var newButton=$('<button>')
+		newButton.attr("class","btn btn-warning keyboardButton").text(keyboard.row2[i]).attr("data-value",keyboard.row2[i]);
+		$('#keyboard-id').append(newButton);
+		}
+		//create the third row
+	$('#keyboard-id').append($('<div>').addClass("row3"));
+	for (var i=0 < keyboard.row3.length;i++){
+		var newButton=$('<button>')
+		newButton.attr("class","btn btn-info keyboardButton").text(keyboard.row3[i]).attr("data-value",keyboard.row3[i]);
+		$('#keyboard-id').append(newButton);
+		}
+
+
+
+	}
+
 	// split pickedWord into an array (array.split(""))
 	// loop over pickedWordArray and create blank dashes for our placeholders
 
