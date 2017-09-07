@@ -8,6 +8,7 @@ var losses=0;
 var lettersGuessed=[];
 var wordBank=[];
 var guessesLeft;
+var dashWordClue=[];
 var guessesMade=0;
 var pickedWord;
 var isWinner;
@@ -38,6 +39,11 @@ function RandomWord() {
    		console.log(pickedWordArray);
    		displayWord();
    		isWinner=pickedWordArray.length;
+   		//create the dashWordClue
+   		dashWordClue=[];
+   			for (var i=0;i<pickedWordArray.length;i++){
+   				dashWordClue.push("-");
+   			}
     })
  }
 
@@ -47,7 +53,7 @@ function RandomWord() {
  	$('#picked-word-array').html($('<h2>').text("Your Clue: " ));
  	var pickedWordSendIt="";
 for (var i=0; i < pickedWordArray.length; i++){
-		pickedWordSendIt=($('<button>').addClass("btn btn-danger").attr("index-value",i)).append($('<i>').addClass("fa fa-minus"));
+		pickedWordSendIt=($('<button>').addClass("btn btn-danger clue-buttons")).append($('<i>').addClass("fa fa-minus"));
 		$('#picked-word-array').append(pickedWordSendIt);
 		}
 		
@@ -68,6 +74,7 @@ function newGame(){
 	$('#guesses-left').empty();
 	$('#guesses-made').empty();
 	$('#messages').empty();
+	lettersGuessed=[];
 	//create the keyboard
 
 	//empty the div, add the first row
@@ -106,19 +113,19 @@ function letterIsClicked(keyPressed){
 				if (guessesLeft <= 0) {
 					//if its zero, call gameover
 					console.log("calling gameOver from letterIsClicked True");
-					gameOver("loss");
+					gameOver("lose");
 					}
 			console.log("guessesLeft letterIsClicked true " + guessesLeft);
 			$('#messages').html($('<h2>').text("Letter Has Been Pressed Before"));
 			}
 			//letter is new
-		else if (letterIndex = -1){
+		else if (letterIndex === -1){
 			console.log("Letter has Not Been Pressed Before");
 			//check to see if guessesLeft = 0
 				if (guessesLeft <= 0) {
 					//if its zero, call gameover
 					console.log("calling gameOver from letterIsClicked false");
-					gameOver();
+					gameOver("lose");
 					}
 			letterIsNewGuess(keyPressed);
 
@@ -126,18 +133,6 @@ function letterIsClicked(keyPressed){
 
 		else {console.log("ERROR")}
 		
-			
-		
-		//i check to see if its in the pickedWordArray
-			//letterIsGuessed(keypressed);
-			//Change the dash to a letter,
-			//check to see if the game is over
-
-
-
-		//if the letter isnt in the picked word 
-			//guessesLeft--;
-			//letterIsGuessed(keypressed);
 	};
 
 function letterIsNewGuess(keyPressed){
@@ -146,52 +141,72 @@ function letterIsNewGuess(keyPressed){
 		//Add the key to the #guesses-made
 	
 		lettersGuessed.push(keyPressed);
-		
-		//push the message
-		if (pickedWordArray.includes(keyPressed)){
-			$('#messages').html($('<h2>').text("Well Done."));
-			$('#guesses-made').append($('<button>').addClass("btn btn-success").text(keyPressed));
-		}
-		else {
-			$('#messages').html($('<h2>').text("Ouch. That wasn't good."));
-			$('#guesses-made').append($('<button>').addClass("btn btn-warning").text(keyPressed));
-		}
-
-
-			var pickedWordSendIt="";
-		//redraw the clue
+	//if the pickedWord includes the keypressed, 	
+		//push the message 
 		$('#picked-word-array').empty();
  		$('#picked-word-array').html($('<h2>').text("Your Clue: " ));
+
+	if (pickedWordArray.includes(keyPressed)){
+		
+		$('#guesses-made').append($('<button>').addClass("btn btn-success clue-buttons").text(keyPressed));
+		var pickedWordSendIt="";
+		//redraw the clue
+		
 		for (var i=0; i<pickedWordArray.length;i++){
 			//if the array[i] is equal to the key, display the button as a key
-			if (pickedWordArray[i]===keyPressed){
-				pickedWordSendIt=$('<button>').addClass("btn btn-danger").text(keyPressed);
-				$('#picked-word-array').append(pickedWordSendIt);
+			if (pickedWordArray[i]===keyPressed ){
+				dashWordClue[i]=keyPressed;
+				console.log(dashWordClue[i]);
 				isWinner--;
-				if (isWinner <= 0){ gameOver(win);}
+				console.log("IsWinner   " + isWinner);
+					if (isWinner <= 0){ gameOver("win");}
 				}
-				// else make it a dash
-				else
-				{
-				pickedWordSendIt=($('<button>').addClass("btn btn-danger").attr("index-value",i)).append($('<i>').addClass("fa fa-minus"));
-				$('#picked-word-array').append(pickedWordSendIt);
+				// if it doesnt match and the clue is a dash (if its not a dash leave it alone)
+			else if (pickedWordArray[i]!=keyPressed && dashWordClue[i] ==="-" ){
+					dashWordClue[i]="-";
+					console.log(dashWordClue[i]);
 				}
+			}
 		}
+	else {
+			$('#messages').html($('<h2>').text("Ouch. That wasn't good."));
+			$('#guesses-made').append($('<button>').addClass("btn btn-warning clue-buttons").text(keyPressed));
+			guessesLeft--;
+			$('#guesses-left').html($('<h3>').text("Guesses Left: " + guessesLeft));
+		}
+
+
+		console.log(dashWordClue);
+		//display the Clue
+	for (var j=0;j<dashWordClue.length;j++){
+		if (dashWordClue[j] === "-"){
+			pickedWordSendIt=($('<button>').addClass("btn btn-danger clue-buttons").attr("index-value",j)).append($('<i>').addClass("fa fa-minus"));
+			$('#picked-word-array').append(pickedWordSendIt);
+			}
+		else {
+			pickedWordSendIt=$('<button>').addClass("btn btn-danger clue-buttons").text(dashWordClue[j]);
+			$('#picked-word-array').append(pickedWordSendIt);
+			}
 	}
-};
+}
 
 function gameOver(outcome){
-	switch(outcome){
-		case win:
+	winOrLoss=outcome;
+	console.log(winOrLoss);
+	switch(winOrLoss){
+		case "win":
 			console.log("GAME OVER. YOU WON");
 			wins++;
 			$('#messages').html($('<h2>').text("Game Over. WINNER WINNER CHICKEN DINNER. Press a New Game to play again"));
+			$("#winModal").modal();
 			break;
-		case lose:
+		case "lose":
 			console.log("GAME OVER YOU LOSE");
-			$('#messages').html($('<h2>').text("Game Over. Better Luck Next Time."));
+			$('#messages').html($('<h2>').text("Game Over. Better Luck Next Time. The correct word was: " + pickedWord));
 			losses++;
+			$("#loseModal").modal();
 	}
+
 };
 
 //event listeners
@@ -199,7 +214,9 @@ function gameOver(outcome){
 //newgame
  $(document).on('click','#new-game', function(event){
  	event.preventDefault();
+ 	//$(".modal").modal();
  	newGame();
+
 });
 
 
