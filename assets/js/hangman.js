@@ -31,7 +31,8 @@ function RandomWord() {
             type: "GET",
             url: requestStr
         }).done(function(result) {
-       pickedWord = result[0].word;
+       pickedWord = result[0].word.toLowerCase();
+         // split pickedWord into an array (array.split(""))
    		pickedWordArray=pickedWord.split("");
    		console.log(pickedWordArray);
    		displayWord();
@@ -44,23 +45,21 @@ function RandomWord() {
  	$('#picked-word-array').html($('<h2>').text("Your Clue: " ));
  	var pickedWordSendIt="";
 for (var i=0; i < pickedWordArray.length; i++){
-		pickedWordSendIt=($('<button>').addClass("btn btn-danger").attr("index-value",i)).append($('<i>').addClass("fa fa-minus fa-2x"));
-		//pickedWordSendIt.append($('<span>').addClass("glyphicons glyphicons-minus"));
+		pickedWordSendIt=($('<button>').addClass("btn btn-danger").attr("index-value",i)).append($('<i>').addClass("fa fa-minus"));
 		$('#picked-word-array').append(pickedWordSendIt);
 		}
 		
-			//.append(pickedWordSendIt));
- 		$('#guesses-left').html("Guesses Left: " + guessesLeft);
- 		$('#guesses-made').html("Guesses Made So Far: ");
+ 		$('#guesses-left').html($('<h3>').text("Guesses Left: " + guessesLeft));
+ 		$('#guesses-made').html($('<h3>').text("Guesses Made So Far: "));
  }
 
 
 function newGame(){
 	// reset guesses left
-	guessesLeft=10;
+	guessesLeft=8;
 	//display the score
-	 $('#wins').text("Wins: " + wins);
- 	$('#losses').text("Losses: " + losses);
+	 $('#wins').html($('<h3>').text("Wins: " + wins));
+ 	$('#losses').html($('<h3>').text("Losses: " + losses));
 	// empty out pickedWordPlaceholders
 	$('#picked-word-array').empty();
 	// empty out lettersGuessed
@@ -94,16 +93,49 @@ function newGame(){
 	// grab a new word
 	RandomWord();
 }
-	
-	
+function letterIsClicked(keypressed){
+		//check to see if guessesLeft = 0
+			//if its zero, call gameover
+		//check to see if the letter is disabled
+		//if it isnt, check to see if its in the pickedWordArray
+			//letterIsGuessed(keypressed);
+			//Change the dash to a letter,
+			//check to see if the game is over
 
 
 
+		//if the letter isnt in the picked word 
+			//guessesLeft--;
+			//letterIsGuessed(keypressed);
+	};
 
+function letterIsGuessed(keypressed){
+		//disable the letter on the keyboard.  Add the key to the #guesses-made
+
+};
+
+function gameOver(){
+
+};
+
+//event listeners
+
+//newgame
  $(document).on('click','#new-game', function(event){
  	event.preventDefault();
  	newGame();
 });
+
+
+// Keyboard Listener. When a letter is clicked, execute the letterIsClicked function.
+
+$(document).on('click','.keyboardButton', function(event){
+	console.log("Keyboard ID");
+	var keyPressed=$(this).attr('data-value');
+	letterIsClicked(keypressed);
+
+});
+
 
 });
 

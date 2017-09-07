@@ -1,13 +1,13 @@
 .keyboardButton{
-	padding:15px;
+	padding:10px;
 	margin:2px;
+	font-size: 1.5em;
 }
 #jumbotron{
 	background-image: url('../images/hangman.jpg');
 	background-size: 75%;
 }
 .clue-buttons{
-	padding:20px;
 	margin: 5px;
-	font-size: 2em;
+	font-size: 1.0em;
 }
