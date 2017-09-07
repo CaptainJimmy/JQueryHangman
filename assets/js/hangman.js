@@ -10,6 +10,7 @@ var wordBank=[];
 var guessesLeft;
 var guessesMade=0;
 var pickedWord;
+var isWinner;
 var pickedWordArray=[];
 var pickedWordPlaceholders;
 var keyboard={
@@ -36,6 +37,7 @@ function RandomWord() {
    		pickedWordArray=pickedWord.split("");
    		console.log(pickedWordArray);
    		displayWord();
+   		isWinner=pickedWordArray.length;
     })
  }
 
@@ -64,7 +66,8 @@ function newGame(){
 	$('#picked-word-array').empty();
 	// empty out lettersGuessed
 	$('#guesses-left').empty();
-
+	$('#guesses-made').empty();
+	$('#messages').empty();
 	//create the keyboard
 
 	//empty the div, add the first row
@@ -93,11 +96,39 @@ function newGame(){
 	// grab a new word
 	RandomWord();
 }
-function letterIsClicked(keypressed){
-		//check to see if guessesLeft = 0
-			//if its zero, call gameover
-		//check to see if the letter is disabled
-		//if it isnt, check to see if its in the pickedWordArray
+function letterIsClicked(keyPressed){
+		//check to see if the letter is in the lettersGuessed
+		var letterIndex=lettersGuessed.indexOf(keyPressed)
+
+		if (letterIndex != -1)	{
+				console.log("PRESSED BEFORE");
+				//check to see if guessesLeft = 0
+				if (guessesLeft <= 0) {
+					//if its zero, call gameover
+					console.log("calling gameOver from letterIsClicked True");
+					gameOver("loss");
+					}
+			console.log("guessesLeft letterIsClicked true " + guessesLeft);
+			$('#messages').html($('<h2>').text("Letter Has Been Pressed Before"));
+			}
+			//letter is new
+		else if (letterIndex = -1){
+			console.log("Letter has Not Been Pressed Before");
+			//check to see if guessesLeft = 0
+				if (guessesLeft <= 0) {
+					//if its zero, call gameover
+					console.log("calling gameOver from letterIsClicked false");
+					gameOver();
+					}
+			letterIsNewGuess(keyPressed);
+
+			}
+
+		else {console.log("ERROR")}
+		
+			
+		
+		//i check to see if its in the pickedWordArray
 			//letterIsGuessed(keypressed);
 			//Change the dash to a letter,
 			//check to see if the game is over
@@ -109,13 +140,58 @@ function letterIsClicked(keypressed){
 			//letterIsGuessed(keypressed);
 	};
 
-function letterIsGuessed(keypressed){
-		//disable the letter on the keyboard.  Add the key to the #guesses-made
+function letterIsNewGuess(keyPressed){
+	console.log("letterIsGuessed");
+		console.log(keyPressed);
+		//Add the key to the #guesses-made
+	
+		lettersGuessed.push(keyPressed);
+		
+		//push the message
+		if (pickedWordArray.includes(keyPressed)){
+			$('#messages').html($('<h2>').text("Well Done."));
+			$('#guesses-made').append($('<button>').addClass("btn btn-success").text(keyPressed));
+		}
+		else {
+			$('#messages').html($('<h2>').text("Ouch. That wasn't good."));
+			$('#guesses-made').append($('<button>').addClass("btn btn-warning").text(keyPressed));
+		}
 
+
+			var pickedWordSendIt="";
+		//redraw the clue
+		$('#picked-word-array').empty();
+ 		$('#picked-word-array').html($('<h2>').text("Your Clue: " ));
+		for (var i=0; i<pickedWordArray.length;i++){
+			//if the array[i] is equal to the key, display the button as a key
+			if (pickedWordArray[i]===keyPressed){
+				pickedWordSendIt=$('<button>').addClass("btn btn-danger").text(keyPressed);
+				$('#picked-word-array').append(pickedWordSendIt);
+				isWinner--;
+				if (isWinner <= 0){ gameOver(win);}
+				}
+				// else make it a dash
+				else
+				{
+				pickedWordSendIt=($('<button>').addClass("btn btn-danger").attr("index-value",i)).append($('<i>').addClass("fa fa-minus"));
+				$('#picked-word-array').append(pickedWordSendIt);
+				}
+		}
+	}
 };
 
-function gameOver(){
-
+function gameOver(outcome){
+	switch(outcome){
+		case win:
+			console.log("GAME OVER. YOU WON");
+			wins++;
+			$('#messages').html($('<h2>').text("Game Over. WINNER WINNER CHICKEN DINNER. Press a New Game to play again"));
+			break;
+		case lose:
+			console.log("GAME OVER YOU LOSE");
+			$('#messages').html($('<h2>').text("Game Over. Better Luck Next Time."));
+			losses++;
+	}
 };
 
 //event listeners
@@ -132,47 +208,12 @@ function gameOver(){
 $(document).on('click','.keyboardButton', function(event){
 	console.log("Keyboard ID");
 	var keyPressed=$(this).attr('data-value');
-	letterIsClicked(keypressed);
+	//disable the letter on the keyboard.  
+	$(this).addClass("disabled");
+	letterIsClicked(keyPressed);
 
 });
 
 
 });
-
-
-
-//event listeners
-
- //$('#new-game').on('keyup', function(event){
-// console.log(event);
-// var keyVal = event.whatever
-
-// if keyVal is already in the lettersGuessedArray
-	// if NOT push keyval into lettersguessedarray
-	//letterPress(keyVal)
-
-//})
-
-
-// split pickedWord into an array (array.split(""))
-	// loop over pickedWordArray and create blank dashes for our placeholders
-
-
-	// placeholders.join(" ") to the DOM
-
-
-
-//	// fun a for loop over our picked word array
-		// if valOfLetterPressed === pickedWordArray[i]
-			//its a match, placeHoldersArray[i] = valOfLetterPressed
-			//reweite placedHoldersArray to DOM
-
-
-	// else if not a match
-	//guessesLeft--;
-	//if guesses:eft === then game over
-	//write game over message to the dom and let them know the correct word
-
-//}
-
 
