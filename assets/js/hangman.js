@@ -27,7 +27,7 @@ var keyboard={
 
 function RandomWord() {
 	console.log("RandomWord");
-        var requestStr = "https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&includePartOfSpeech=noun&excludePartOfSpeech=conjunction&minCorpusCount=0&minLength=5&maxLength=15&limit=1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5";
+        var requestStr = "http://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&includePartOfSpeech=noun&excludePartOfSpeech=conjunction&minCorpusCount=0&minLength=5&maxLength=15&limit=1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5";
 
         $.ajax({
             type: "GET",
@@ -205,6 +205,7 @@ function gameOver(outcome){
 			$('#messages').html($('<h2>').text("Game Over. Better Luck Next Time. The correct word was: " + pickedWord));
 			losses++;
 			$("#loseModal").modal();
+			$('#modal-message').text("Game Over. Better Luck Next Time. The correct word was: " + pickedWord);
 	}
 
 };
