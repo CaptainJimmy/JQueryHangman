@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    //v1.01
+    //v1.02
 
     //variables
     var wins = 0;
@@ -27,7 +27,6 @@ $(document).ready(function() {
     //grab a random word from the API
 
     function RandomWord() {
-        console.log("RandomWord");
         var requestStr = "https://api.wordnik.com:443/v4/words.json/randomWords?hasDictionaryDef=true&includePartOfSpeech=noun&excludePartOfSpeech=conjunction&minCorpusCount=0&minLength=5&maxLength=15&limit=1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5";
 
         $.ajax({
@@ -37,7 +36,6 @@ $(document).ready(function() {
             pickedWord = result[0].word.toLowerCase();
             // split pickedWord into an array (array.split(""))
             pickedWordArray = pickedWord.split("");
-            console.log(pickedWordArray);
             displayWord();
             isWinner = pickedWordArray.length;
             //create the dashWordClue
@@ -110,23 +108,18 @@ $(document).ready(function() {
         var letterIndex = lettersGuessed.indexOf(keyPressed)
 
         if (letterIndex != -1) {
-            console.log("PRESSED BEFORE");
             //check to see if guessesLeft = 0
             if (guessesLeft <= 0) {
                 //if its zero, call gameover
-                console.log("calling gameOver from letterIsClicked True");
                 gameOver("lose");
             }
-            console.log("guessesLeft letterIsClicked true " + guessesLeft);
             $('#messages').html($('<h2>').text("Letter Has Been Pressed Before"));
         }
         //letter is new
         else if (letterIndex === -1) {
-            console.log("Letter has Not Been Pressed Before");
             //check to see if guessesLeft = 0
             if (guessesLeft <= 0) {
                 //if its zero, call gameover
-                console.log("calling gameOver from letterIsClicked false");
                 gameOver("lose");
             }
             letterIsNewGuess(keyPressed);
@@ -138,8 +131,7 @@ $(document).ready(function() {
     };
 
     function letterIsNewGuess(keyPressed) {
-        console.log("letterIsGuessed");
-        console.log(keyPressed);
+  
         //Add the key to the #guesses-made
 
         lettersGuessed.push(keyPressed);
@@ -158,9 +150,7 @@ $(document).ready(function() {
                 //if the array[i] is equal to the key, display the button as a key
                 if (pickedWordArray[i] === keyPressed) {
                     dashWordClue[i] = keyPressed;
-                    console.log(dashWordClue[i]);
                     isWinner--;
-                    console.log("IsWinner   " + isWinner);
                     if (isWinner <= 0) {
                         gameOver("win");
                     }
@@ -168,7 +158,6 @@ $(document).ready(function() {
                 // if it doesnt match and the clue is a dash (if its not a dash leave it alone)
                 else if (pickedWordArray[i] != keyPressed && dashWordClue[i] === "-") {
                     dashWordClue[i] = "-";
-                    console.log(dashWordClue[i]);
                 }
             }
         } else {
@@ -179,7 +168,6 @@ $(document).ready(function() {
         }
 
 
-        console.log(dashWordClue);
         //display the Clue
         for (var j = 0; j < dashWordClue.length; j++) {
             if (dashWordClue[j] === "-") {
@@ -194,16 +182,13 @@ $(document).ready(function() {
 
     function gameOver(outcome) {
         winOrLoss = outcome;
-        console.log(winOrLoss);
         switch (winOrLoss) {
             case "win":
-                console.log("GAME OVER. YOU WON");
                 wins++;
                 $('#messages').html($('<h2>').text("Game Over. WINNER WINNER CHICKEN DINNER. Press a New Game to play again"));
                 $("#winModal").modal();
                 break;
             case "lose":
-                console.log("GAME OVER YOU LOSE");
                 $('#messages').html($('<h2>').text("Game Over. Better Luck Next Time. The correct word was: " + pickedWord));
                 losses++;
                 $("#loseModal").modal();
@@ -226,7 +211,6 @@ $(document).ready(function() {
     // Keyboard Listener. When a letter is clicked, execute the letterIsClicked function.
 
     $(document).on('click', '.keyboardButton', function(event) {
-        console.log("Keyboard ID");
         var keyPressed = $(this).attr('data-value');
         //disable the letter on the keyboard.  
         $(this).addClass("disabled");
