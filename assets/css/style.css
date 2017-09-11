@@ -1,33 +1,33 @@
 .keyboardButton{
-	padding:10px;
-	margin:2px;
-	font-size: 1.75em;
+padding:10px;
+margin:2px;
+font-size: 1.75em;
 }
 #jumbotron{
-	background-image: url('../images/hangman.jpg');
-	background-size: 75%;
+background-image: url('../images/hangman.jpg');
+background-size: 75%;
 }
 .clue-buttons{
-	margin: 2px;
-	padding: 10px;
-	font-size: 1.0em;
+margin: 2px;
+padding: 10px;
+font-size: 1.0em;
 }
 .modal-image{
-	height: 400px;
+height: 400px;
 }
 @media all and (max-width: 1200px) { /* screen size until 1200px */
-    .keyboardButton {
-        font-size: 1.5em; /* 1.5x default size */
-        padding:8px;
-    }
+.keyboardButton {
+font-size: 1.5em; /* 1.5x default size */
+padding:8px;
+}
 }
 @media all and (max-width: 1000px) { /* screen size until 1000px */
-    .keyboardButton {
-        font-size: 1.2em; /* 1.2x default size */
-        }
-    }
+.keyboardButton {
+font-size: 1.2em; /* 1.2x default size */
+}
+}
 @media all and (max-width: 500px) { /* screen size until 500px */
-    .keyboardButton {
-        font-size: 0.8em; /* 0.8x default size */
-        }
-    }
+.keyboardButton {
+font-size: 0.8em; /* 0.8x default size */
+}
+}

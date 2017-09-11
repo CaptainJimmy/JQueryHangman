@@ -1,111 +1,97 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta name="Trainviewport" content="width=device-width, initial-scale=1">
-	<title>Hangman in JQuery</title>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- -->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css">
-<!-- <link href="https://fonts.googleapis.com/css?family=Pacifico|VT323|Open+Sans+Condensed:300" rel="stylesheet"> -->
-<!--V1.02-->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://use.fontawesome.com/cd53706be4.js"></script>
-<link rel="icon" href="assets/images/android.png">
-<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-</head>
-<body>
-<div class="container">
-	<div class="jumbotron" id="jumbotron">
-		<h2 style="color:white"> Hangman for those without necks. Or Keyboards.</h1>
-		<p style="color:white">Click the new game button to start</p>
-
-
-		<button id="new-game" class="btn btn-danger">New Game</button>
-	</div>
-<div class="row">	
-	<div class="col-sm-6 col-xs-12">
-		<div class="panel panel-info">
-			<div class="panel-heading"><h3>Guesses:</h3></div>
-		<div class="panel-body">
-			<div class="clue-buttons" id="picked-word-array"></div>
-			<div class="clue-buttons" id="guesses-made"></div>
-			<div class="clue-buttons" id="guesses-left"></div>
-		</div>
-		</div>
-	</div>
-
-	<div class="col-sm-6 col-xs-12">
-		<div class="panel-success">
-			<div class="panel-heading"><h3>Keyboard:</h3></div>
-		<div class="panel-body">
-		<div class="keyboard" id="keyboard-id"></div>
-		<div id="messages"></div>
-		</div>
-	</div>
-</div>
-</div>
-
-<div class="panel panel-primary">
-	<div class="panel-heading"><h3>Scoreboard:</h3></div>
-	<div class="panel-body">
-		<div id="wins"></div>
-		<div id="losses"></div>
-		<div id="games-played"></div>
-	</div>
-</div>
-<div id="winModal" class="modal" role="dialog">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header"><button class="close" type="button" data-dismiss="modal"></button>
+	<head>
+		<meta name="Trainviewport" content="width=device-width, initial-scale=1">
+		<title>Hangman in JQuery</title>
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		-->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css">
+		<!-- <link href="https://fonts.googleapis.com/css?family=Pacifico|VT323|Open+Sans+Condensed:300" rel="stylesheet"> -->
+		<!--V1.03-->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://use.fontawesome.com/cd53706be4.js"></script>
+		<link rel="icon" href="assets/images/android.png">
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="jumbotron" id="jumbotron">
+				<h2 style="color:white"> Hangman for those without necks. Or Keyboards.</h1>
+				<p style="color:white">Click the new game button to start</p>
+				<button id="new-game" class="btn btn-danger">New Game</button>
 			</div>
-
-			<div class="modal-body">
 			<div class="row">
-				<div class="col-med-12">
-				<h2>WINNER WINNER CHICKEN DINNER.</h2>
-				<img src="./assets/images/win.jpg" alt="you won n stuff" class="image-responsive modal-image">
+				<div class="col-sm-6 col-xs-12">
+					<div class="panel panel-info">
+						<div class="panel-heading"><h3>Guesses:</h3></div>
+						<div class="panel-body">
+							<div class="clue-buttons" id="picked-word-array"></div>
+							<div class="clue-buttons" id="guesses-made"></div>
+							<div class="clue-buttons" id="guesses-left"></div>
+						</div>
+					</div>
 				</div>
+				<div class="col-sm-6 col-xs-12">
+					<div class="panel-success">
+						<div class="panel-heading"><h3>Keyboard:</h3></div>
+						<div class="panel-body">
+							<div class="keyboard" id="keyboard-id"></div>
+							<div id="messages"></div>
+						</div>
+					</div>
 				</div>
 			</div>
-
-			<div class="modal-footer">
-				<button type="button" id="startModalButton" class="btn btn-default" data-dismiss="modal">Close</button>
+			<div class="panel panel-primary">
+				<div class="panel-heading"><h3>Scoreboard:</h3></div>
+				<div class="panel-body">
+					<div id="wins"></div>
+					<div id="losses"></div>
+					<div id="games-played"></div>
+				</div>
+			</div>
+			<div id="winModal" class="modal" role="dialog">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header"><button class="close" type="button" data-dismiss="modal"></button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-med-12">
+									<h2>WINNER WINNER CHICKEN DINNER.</h2>
+									<img src="./assets/images/win.jpg" alt="you won n stuff" class="image-responsive modal-image">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="startModalButton" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="loseModal" class="modal" role="dialog">
+				<div class="modal-dialog ">
+					<div class="modal-content">
+						<div class="modal-header"><button class="close" type="button" data-dismiss="modal"></button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-med-12">
+									<h2>Oh Crap Son You Done Lost</h2>
+									<h2 id="modal-message"></h2>
+									<img src="./assets/images/hangmanlose.jpg" alt="you lost n stuff" class="modal-image">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
-<div id="loseModal" class="modal" role="dialog">
-	<div class="modal-dialog ">
-		<div class="modal-content">
-			<div class="modal-header"><button class="close" type="button" data-dismiss="modal"></button>
-			</div>
-
-			<div class="modal-body">
-				<div class="row">
-				<div class="col-med-12">
-				<h2>Oh Crap Son You Done Lost</h2>
-				<h2 id="modal-message"></h2>
-				<img src="./assets/images/hangmanlose.jpg" alt="you lost n stuff" class="modal-image">
-				</div>
-				</div>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
-
-
-
-
-<footer>
-</footer>
-
-<script type="text/javascript" src="assets/js/hangman.js"></script>
-</body>
+		<footer>
+		</footer>
+		<script type="text/javascript" src="assets/js/hangman.js"></script>
+	</body>
 </html>
